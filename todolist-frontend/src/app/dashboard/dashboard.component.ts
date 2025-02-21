@@ -55,7 +55,7 @@ export default class DashboardComponent {
 
   ngOnInit() {
     this.userId = this.authService.getUserId();
-    console.log('Usuario logueado ID:', this.userId); // <-- Agrega esto
+    console.log('Usuario logueado con ID:', this.userId); // <-- Agrega esto
     this.findAllTaskByUserId();
   }
 
