@@ -1,0 +1,47 @@
+<section class="bg-[#fefefe] min-h-screen flex flex-col justify-center items-center px-6 py-8">
+  <div class="w-full max-w-md bg-[#f8f9fa] rounded-lg shadow-lg p-6">
+    <a class="flex items-center justify-center mb-6 text-2xl font-semibold text-gray-800">
+      <img class="w-8 h-8 mr-2" src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/logo.svg" alt="logo" />
+      ISK TASKS - SIGN UP
+    </a>
+
+    <h1 class="text-xl font-bold text-gray-900 text-center">Sign up</h1>
+
+    <p *ngIf="errorMessage" class="text-red-600 text-sm text-center mt-2">
+      {{ errorMessage }}
+    </p>
+
+    <form class="space-y-4 mt-4" [formGroup]="form" (ngSubmit)="submit()">
+      <div>
+        <label for="name" class="block mb-1 text-sm font-medium text-gray-900">Your name</label>
+        <input type="text" id="name" formControlName="name"
+          class="w-full p-2.5 border border-[#dfe3e6] rounded-lg focus:ring-[#5e81ac] focus:border-[#5e81ac] bg-white shadow-sm"
+          placeholder="Your name" required />
+      </div>
+
+      <div>
+        <label for="email" class="block mb-1 text-sm font-medium text-gray-900">Your email</label>
+        <input type="email" id="email" formControlName="email"
+          class="w-full p-2.5 border border-[#dfe3e6] rounded-lg focus:ring-[#5e81ac] focus:border-[#5e81ac] bg-white shadow-sm"
+          placeholder="name@company.com" required />
+      </div>
+
+      <div>
+        <label for="password" class="block mb-1 text-sm font-medium text-gray-900">Password</label>
+        <input type="password" id="password" formControlName="password"
+          class="w-full p-2.5 border border-[#dfe3e6] rounded-lg focus:ring-[#5e81ac] focus:border-[#5e81ac] bg-white shadow-sm"
+          placeholder="••••••••" required />
+      </div>
+
+      <button type="submit" [disabled]="form.invalid"
+        class="w-full text-white bg-[#5e81ac] hover:bg-[#4a6b91] transition-all font-medium rounded-lg text-sm px-5 py-2.5 shadow-md">
+        Sign up
+      </button>
+
+      <p class="text-sm text-gray-600 text-center">
+        Do you have an account?
+        <a routerLink="/auth/log-in" class="font-medium text-[#d67272] hover:underline">Log in</a>
+      </p>
+    </form>
+  </div>
+</section>

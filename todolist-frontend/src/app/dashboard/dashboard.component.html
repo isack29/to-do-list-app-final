@@ -1,0 +1,133 @@
+<section
+  class="bg-[#fefefe] min-h-screen flex flex-col items-center p-4 md:p-6"
+>
+  <!-- Header -->
+  <div
+    class="w-full max-w-4xl flex flex-col md:flex-row justify-between items-center mb-6"
+  >
+    <h1 class="text-2xl md:text-3xl font-extrabold text-gray-800 mb-4 md:mb-0">
+      📌 Mis Tareas
+    </h1>
+    <button
+      class="text-white bg-[#d67272] hover:bg-[#c06060] transition-all px-4 py-2 rounded-lg shadow-md focus:outline-none w-full md:w-auto"
+      (click)="logout()"
+    >
+      🚪 Cerrar sesión
+    </button>
+  </div>
+
+  <!-- Contenedor principal -->
+  <div class="w-full max-w-4xl bg-[#f8f9fa] p-6 rounded-xl shadow-lg">
+    <!-- Formulario para crear tarea -->
+    <!-- Formulario para crear o editar tarea -->
+    <h2 class="text-lg md:text-xl font-semibold text-gray-900 mb-4">
+      {{ isEditing ? "✏️ Editar tarea" : "✍️ Nueva tarea" }}
+    </h2>
+
+
+    <!-- Mensaje de éxito -->
+    <div
+      *ngIf="successMessage"
+      class="text-green-700 bg-green-100 p-3 rounded-lg mb-4"
+    >
+      {{ successMessage }}
+    </div>
+
+    <!-- Mensaje de error -->
+    <div
+      *ngIf="errorMessage"
+      class="text-red-700 bg-red-100 p-3 rounded-lg mb-4"
+    >
+      {{ errorMessage }}
+    </div>
+
+    <form [formGroup]="form" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <input
+        type="text"
+        placeholder="Título"
+        formControlName="title"
+        class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#5e81ac] shadow-sm bg-white"
+      />
+      <input
+        type="datetime-local"
+        formControlName="date"
+        class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#5e81ac] shadow-sm bg-white"
+      />
+      <textarea
+        placeholder="Descripción (máx. 100 caracteres)"
+        maxlength="100"
+        formControlName="description"
+        class="w-full col-span-1 md:col-span-2 p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#5e81ac] shadow-sm bg-white"
+      ></textarea>
+      <button
+        (click)="isEditing ? updateTask() : addTask()"
+        type="submit"
+        class="w-full col-span-1 md:col-span-2 bg-[#5e81ac] text-white p-3 rounded-lg hover:bg-[#4a6b91] transition-all shadow-md"
+      >
+        {{ isEditing ? "🔄 Actualizar" : "➕ Agregar Tarea" }}
+      </button>
+    </form>
+  </div>
+
+  <!-- Lista de tareas -->
+
+  <div class="w-full max-w-4xl bg-[#f8f9fa] p-6 rounded-xl shadow-lg mt-6">
+    <h2 class="text-lg md:text-xl font-semibold text-gray-900 mb-4">
+      ✅ Tareas pendientes
+    </h2>
+
+    <ul class="space-y-4">
+      <li
+        *ngFor="let task of tasks"
+        class="flex flex-col md:flex-row justify-between items-start md:items-center p-4 border border-gray-300 rounded-lg bg-[#dfe3e6] shadow-md"
+      >
+        <div class="flex-1">
+          <h3 class="text-base md:text-lg font-medium text-gray-900">
+            📝 {{ task.title }}
+          </h3>
+          <p class="text-sm text-gray-600">
+            {{ task.description }}
+          </p>
+          <p class="text-xs text-gray-500">
+            📅 {{ task.date | date : "yyyy-MM-dd HH:mm" }}
+          </p>
+        </div>
+        <div class="flex space-x-2 mt-2 md:mt-0">
+          <button
+            class="text-white bg-[#5e81ac] hover:bg-[#4a6b91] px-4 py-2 rounded-lg transition-all shadow-md"
+            (click)="editTask(task)"
+          >
+            ✏️ Editar
+          </button>
+          <button
+            class="text-white bg-[#d67272] hover:bg-[#c06060] px-4 py-2 rounded-lg transition-all shadow-md"
+            (click)="deleteTask(task.id)"
+          >
+            🗑️ Eliminar
+          </button>
+        </div>
+      </li>
+    </ul>
+  </div>
+
+  <!-- Paginación -->
+  <div class="flex justify-center items-center space-x-2 mt-6">
+    <button
+      (click)="changePage(currentPage - 1)"
+      [disabled]="currentPage === 1"
+      class="px-4 py-2 bg-gray-300 rounded-lg shadow-md disabled:opacity-50"
+    >
+      ⬅️ Anterior
+    </button>
+    <span class="text-lg font-semibold"
+      >Página {{ currentPage }} de {{ totalPages }}</span
+    >
+    <button
+      (click)="changePage(currentPage + 1)"
+      [disabled]="currentPage === totalPages"
+      class="px-4 py-2 bg-gray-300 rounded-lg shadow-md disabled:opacity-50"
+    >
+      Siguiente ➡️
+    </button>
+  </div>
+</section>
