@@ -3,16 +3,16 @@ const path = require("path");
 
 const app = express();
 
-// Servir archivos estáticos de la carpeta dist
-app.use(express.static(path.join(__dirname, "dist/todolist-frontend")));
+// Cambia esta línea para servir los archivos desde "browser"
+const frontendPath = path.join(__dirname, "dist", "todolist-frontend", "browser");
+app.use(express.static(frontendPath));
 
-// Redirigir todas las rutas al index.html de Angular
+// Manejo de rutas de Angular
 app.get("*", (req, res) => {
-    res.sendFile(path.join(__dirname, "dist/todolist-frontend/browser/index.html"));
+    res.sendFile(path.join(frontendPath, "index.html"));
 });
 
-// Puerto de Railway o 3000 en local
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-    console.log(`🚀 Frontend running on port ${PORT}`);
+    console.log(`Servidor corriendo en http://localhost:${PORT}`);
 });
