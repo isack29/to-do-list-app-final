@@ -8,7 +8,7 @@ app.use(express.static(path.join(__dirname, "dist/todolist-frontend")));
 
 // Redirigir todas las rutas al index.html de Angular
 app.get("*", (req, res) => {
-    res.sendFile(path.join(__dirname, "dist/todolist-frontend/index.html"));
+    res.sendFile(path.join(__dirname, "dist/todolist-frontend/browser/index.html"));
 });
 
 // Puerto de Railway o 3000 en local
